@@ -1,0 +1,32 @@
+{
+	"schemaVersion": 1,
+	"id": "true-darkness-fork",
+	"version": "${version}",
+	"name": "True Darkness Fork",
+	"description": "Nighttime darkness affected by moon phase and cloud cover",
+	"authors": [
+		"HaXr"
+	],
+	"contributors": [
+		"Grondag - Original Author"
+	],
+	"contact": {
+		"issues": "https://github.com/HaXrBOT/darkness/issues",
+		"sources": "https://github.com/HaXrBOT/darkness"
+	},
+	"license": "LGPL 3.0",
+	"icon": "assets/darkness/true-darkness-fork.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": []
+	},
+	"mixins": [
+		"darkness.client.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.14.22",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}
