@@ -18,7 +18,12 @@
 	"icon": "assets/darkness/true-darkness-fork.png",
 	"environment": "*",
 	"entrypoints": {
-		"main": []
+		"main": [
+			"grondag.darkness.DarknessInit"
+		],
+		"modmenu": [
+			"grondag.darkness.config.ModMenuIntegration"
+		]
 	},
 	"mixins": [
 		"darkness.client.json"
