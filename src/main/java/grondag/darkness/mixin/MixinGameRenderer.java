@@ -26,8 +26,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
@@ -43,7 +41,7 @@ public class MixinGameRenderer {
 	private LightTexture lightTexture;
 
 	@Inject(method = "renderLevel", at = @At(value = "HEAD"))
-	private void onRenderLevel(float tickDelta, long nanos, PoseStack matrixStack, CallbackInfo ci) {
+	private void onRenderLevel(float tickDelta, long nanos, CallbackInfo ci) {
 		final LightmapAccess lightmap = (LightmapAccess) lightTexture;
 
 		if (lightmap.darkness_isDirty()) {
