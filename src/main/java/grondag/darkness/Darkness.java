@@ -20,15 +20,16 @@
 
 package grondag.darkness;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.awt.*;
+import java.io.*;
 import java.util.Properties;
 
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.components.ChatComponent;
+import net.minecraft.network.chat.Component;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -56,6 +57,13 @@ public class Darkness {
 	static boolean darkSkyless;
 	static boolean blockLightOnly;
 	static boolean ignoreMoonPhase;
+	static boolean invertBiomeDarkness;
+	public static JsonObject darknessBiomes;
+
+	//Because we dont want instant turning off/on of the true darkness we slowly fade it in
+	//The Values range from 0-100
+	//The Values get changed independently from if the darkness calculations are done or not
+	static float biomeFadeInAlpha = 0;
 
 	static {
 		final File configFile = getConfigFile();
@@ -69,6 +77,29 @@ public class Darkness {
 			}
 		}
 
+		//Try to load Biome Config File
+		Gson gson = new Gson();
+		final File biomesFile = getBiomesFile();
+		try (FileInputStream inputStream = new FileInputStream(biomesFile);
+			 InputStreamReader reader = new InputStreamReader(inputStream)) {
+			darknessBiomes = gson.fromJson(reader, JsonObject.class);
+		}
+		catch (final IOException e) {
+			LOG.warn("[Darkness] Could not read property file '" + configFile.getAbsolutePath() + "'", e);
+			darknessBiomes = new JsonObject();
+		}
+
+		//Try to read Biomes JSON
+		if(darknessBiomes.has("Biomes"))
+		{
+
+		}
+		//If theres no Biomes Key => Create one (and Save)
+		else
+		{
+			darknessBiomes.add("Biomes", new JsonArray());
+		}
+
 		ignoreMoonPhase = properties.computeIfAbsent("ignore_moon_phase", (a) -> "false").equals("true");
 		blockLightOnly = properties.computeIfAbsent("only_affect_block_light", (a) -> "false").equals("true");
 		darkOverworld = properties.computeIfAbsent("dark_overworld", (a) -> "true").equals("true");
@@ -76,6 +107,7 @@ public class Darkness {
 		darkNether = properties.computeIfAbsent("dark_nether", (a) -> "true").equals("true");
 		darkEnd = properties.computeIfAbsent("dark_end", (a) -> "true").equals("true");
 		darkSkyless = properties.computeIfAbsent("dark_skyless", (a) -> "true").equals("true");
+		invertBiomeDarkness = properties.computeIfAbsent("invert_biome_darkness", (a) -> "false").equals(("true"));
 
 		try {
 			darkNetherFogConfigured = Double.parseDouble(properties.computeIfAbsent("dark_nether_fog", (a) -> "0.5").toString());
@@ -113,6 +145,17 @@ public class Darkness {
 		return new File(configDir, "darkness.properties");
 	}
 
+	private static File getBiomesFile()
+	{
+		final File configDir = Platform.configDirectory().toFile();
+
+		if (!configDir.exists()) {
+			LOG.warn("[Darkness] Could not access configuration directory: " + configDir.getAbsolutePath());
+		}
+
+		return new File(configDir, "darkness-biomes.json");
+	}
+
 	public static void saveConfig() {
 		final File configFile = getConfigFile();
 		final Properties properties = new Properties();
@@ -126,12 +169,25 @@ public class Darkness {
 		properties.put("dark_end", Boolean.toString(darkEnd));
 		properties.put("dark_end_fog", Double.toString(darkEndFogConfigured));
 		properties.put("dark_skyless", Boolean.toString(darkSkyless));
+		properties.put("invert_biome_darkness", Boolean.toString(invertBiomeDarkness));
 
 		try (FileOutputStream stream = new FileOutputStream(configFile)) {
 			properties.store(stream, "Darkness properties file");
 		} catch (final IOException e) {
 			LOG.warn("[Darkness] Could not store property file '" + configFile.getAbsolutePath() + "'", e);
 		}
+
+		//Save Biomes List
+		Gson gson = new Gson();
+		final File biomesFile = getBiomesFile();
+		try (FileWriter writer = new FileWriter(biomesFile)) {
+			gson.toJson(darknessBiomes, writer);
+		}
+		catch (final IOException e)
+		{
+			LOG.warn("[Darkness] Could not store property file '" + configFile.getAbsolutePath() + "'", e);
+		}
+
 	}
 
 	public static boolean blockLightOnly() {
@@ -203,8 +259,17 @@ public class Darkness {
 	public static void updateLuminance(float tickDelta, Minecraft client, GameRenderer worldRenderer, float prevFlicker) {
 		final ClientLevel world = client.level;
 
-		//Biome Exlusion Check
-		if(world.registryAccess().registryOrThrow(Registries.BIOME).getKey(BiomeChecker.GetCurrentBiome()).equals(new ResourceLocation("minecraft", "taiga")))
+
+		//Calculate the Biome Fade In Alpha
+		//Because Alpha goes from 0-100 and tickDelta should be delta/ASecond => TickDelta always adds up to 1 in 1 Second Runtime we need to multiply by 100/Seconds we want
+		float fadeInSeconds = 100 / 2;
+		biomeFadeInAlpha += (BiomeChecker.ShouldBiomeBeDark(world) ? tickDelta : -tickDelta) * fadeInSeconds;
+
+		//Clamp FadeInAlpha
+		biomeFadeInAlpha = Math.max(0, Math.min(100, biomeFadeInAlpha));
+
+		//Exit when the Alpha is too low anyways
+		if(biomeFadeInAlpha <= 0)
 		{
 			enabled = false;
 			return;
@@ -219,7 +284,8 @@ public class Darkness {
 				enabled = true;
 			}
 
-			final float dimSkyFactor = Darkness.skyFactor(world);
+			float originalDimSkyFactor = Darkness.skyFactor(world);
+			final float dimSkyFactor = originalDimSkyFactor + (1 - (biomeFadeInAlpha / 100)) * (1 - originalDimSkyFactor);
 			final float ambient = world.getSkyDarken(1.0F);
 			final DimensionType dim = world.dimensionType();
 			final boolean blockAmbient = !Darkness.isDark(world);
@@ -254,6 +320,7 @@ public class Darkness {
 						blockFactor = 1 - blockFactor * blockFactor * blockFactor * blockFactor;
 					}
 
+					blockFactor = blockFactor + (1 - (biomeFadeInAlpha / 100)) * (1 - blockFactor);
 					final float blockBase = blockFactor * LightTexture.getBrightness(dim, blockIndex) * (prevFlicker * 0.1F + 1.5F);
 					min = 0.4f * blockFactor;
 					final float blockGreen = blockBase * ((blockBase * (1 - min) + min) * (1 - min) + min);
