@@ -1,10 +1,3 @@
-## Windows
-Thumbs.db
-
-## exclude large animated textures
-*_anim.png
-*_anim_low.png
-
 # eclipse
 bin
 *.launch
@@ -12,36 +5,22 @@ bin
 .metadata
 .classpath
 .project
-eclipse
-.vscode
-gruntle
 
-build
-run
-
-
-##idea
-*.iml
+# idea
+out
 *.ipr
 *.iws
+*.iml
+.idea
 
-## Jars
+# gradle
+build
+.gradle
 
-### OSX (adds a lot of garbage)###
-.DS_Store
-.AppleDouble
-.LSOverride
-
-# Thumbnails
-._*
-
-#stuff
-#config
+# other
+run
 logs
-.html
-discarded textures
-*.nps
-/.apt_generated/
-notes.txt
-*.csv
-.mixin.out/audit/mixin_implementation_report.txt
+libs
+
+# Files from Forge MDK
+forge*changelog.txt
