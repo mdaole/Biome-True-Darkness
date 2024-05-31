@@ -26,6 +26,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -199,6 +202,14 @@ public class Darkness {
 
 	public static void updateLuminance(float tickDelta, Minecraft client, GameRenderer worldRenderer, float prevFlicker) {
 		final ClientLevel world = client.level;
+
+		//Biome Exlusion Check
+		if(world.registryAccess().registryOrThrow(Registries.BIOME).getKey(BiomeChecker.GetCurrentBiome()).equals(new ResourceLocation("minecraft", "taiga")))
+		{
+			enabled = false;
+			return;
+		}
+
 
 		if (world != null) {
 			if (!isDark(world) || client.player.hasEffect(MobEffects.NIGHT_VISION) || (client.player.hasEffect(MobEffects.CONDUIT_POWER) && client.player.getWaterVision() > 0) || world.getSkyFlashTime() > 0) {
