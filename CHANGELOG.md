@@ -1,2 +1,1 @@
-- Port to 1.20.5
-- No longer includes Cloth Config in the jar.
+- Updated to 1.21
