@@ -1,1 +1,1 @@
-- Updated to 1.21
+- Rebranded to "True Darkness Refabricated".
