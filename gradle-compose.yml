@@ -15,7 +15,7 @@ replacements:
   homepageUrl: "https://modrinth.com/mod/true-darkness-fabric"
   sourcesUrl: "https://github.com/HaXrBOT/True-Darkness-Refabricated"
   issuesUrl: "https://github.com/HaXrBOT/True-Darkness-Refabricated/issues"
-  version: "1.0.5"
+  version: "1.0.6"
   breaks: ""
   name: "True Darkness Refabricated"
   id: "darkness"
