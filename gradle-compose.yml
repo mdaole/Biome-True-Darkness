@@ -1,0 +1,45 @@
+version: '0.0.2'
+source: "https://github.com/HaXrBOT/ProcessedModTemplate/tree/master"
+replacements:
+  dependencies: ""
+  fabric_dependencies: modApi ("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}")
+  forge_dependencies: implementation "maven.modrinth:cloth-config:${project.cloth_config_version}+forge"
+  neoforge_dependencies: implementation "maven.modrinth:cloth-config:${project.cloth_config_version}+neoforge"
+  mcpublish_dependencies: "cloth-config"
+  licensename: "LICENSE"
+  author: "HaXr"
+  contributor: "Grondag (Original Author)"
+  group: "grondag.darkness"
+  licenseName: "LGPL 3.0"
+  description: "Nighttime darkness affected by moon phase and cloud cover"
+  homepageUrl: "https://modrinth.com/mod/true-darkness-fabric"
+  sourcesUrl: "https://github.com/HaXrBOT/True-Darkness-Refabricated"
+  issuesUrl: "https://github.com/HaXrBOT/True-Darkness-Refabricated/issues"
+  version: "1.0.5"
+  breaks: ""
+  name: "True Darkness Refabricated"
+  id: "darkness"
+  fabric_entrypoint: "grondag.darkness.DarknessInit"
+  fabric_modmenu_entrypoint: "grondag.darkness.config.ModMenuIntegration"
+  relocationpackage: "grondag.darkness"
+  modrinthid: "Pf8PJBb5"
+  curseforgeid: "906926"
+  versionlessname: "TDRVersionless"
+  mcpublishVersion: "3.3.0"
+enabledFlags:
+  - autopublish
+  - publishFabric
+  - publishForge
+  - modrinth
+  - curseforge
+rootProject:
+  template: "."
+subProjects:
+  TDRVersionless:
+    template: "Versionless"
+    replacements:
+      dependencies: '
+      compileOnly "com.google.code.gson:gson:2.10.1"
+
+      compileOnly "org.apache.logging.log4j:log4j-core:2.20.0"
+      '

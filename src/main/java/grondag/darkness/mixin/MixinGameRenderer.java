@@ -36,19 +36,20 @@ import grondag.darkness.LightmapAccess;
 
 @Mixin(GameRenderer.class)
 public class MixinGameRenderer {
-	@Shadow
-	private Minecraft minecraft;
-	@Shadow
-	private LightTexture lightTexture;
+    @Shadow
+    private Minecraft minecraft;
+    @Shadow
+    private LightTexture lightTexture;
 
-	@Inject(method = "renderLevel", at = @At(value = "HEAD"))
-	private void onRenderLevel(DeltaTracker deltaTracker, CallbackInfo ci) {
-		final LightmapAccess lightmap = (LightmapAccess) lightTexture;
+    @Inject(method = "renderLevel", at = @At(value = "HEAD"))
+    private void onRenderLevel(DeltaTracker deltaTracker, CallbackInfo ci) {
+        final LightmapAccess lightmap = (LightmapAccess) lightTexture;
 
-		if (lightmap.darkness_isDirty()) {
-			minecraft.getProfiler().push("lightTex");
-			Darkness.updateLuminance(deltaTracker.getGameTimeDeltaTicks(), minecraft, (GameRenderer) (Object) this, lightmap.darkness_prevFlicker());
-			minecraft.getProfiler().pop();
-		}
-	}
+        if (lightmap.darkness_isDirty()) {
+            minecraft.getProfiler().push("lightTex");
+            Darkness.updateLuminance(deltaTracker.getGameTimeDeltaTicks(), minecraft, (GameRenderer) (Object) this,
+                    lightmap.darkness_prevFlicker());
+            minecraft.getProfiler().pop();
+        }
+    }
 }

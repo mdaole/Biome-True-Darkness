@@ -32,17 +32,18 @@ import grondag.darkness.Darkness;
 
 @Mixin(DimensionSpecialEffects.EndEffects.class)
 public class MixinEndEffects {
-	private static double MIN = 0.029999999329447746D;
+    private static double MIN = 0.029999999329447746D;
 
-	@Inject(method = "getBrightnessDependentFogColor", at = @At(value = "RETURN"), cancellable = true)
-	private void onAdjustFogColor(CallbackInfoReturnable<Vec3> ci) {
-		final double factor = Darkness.darkEndFog();
+    @Inject(method = "getBrightnessDependentFogColor", at = @At(value = "RETURN"), cancellable = true)
+    private void onAdjustFogColor(CallbackInfoReturnable<Vec3> ci) {
+        final double factor = Darkness.darkEndFog();
 
-		if (factor != 1.0) {
-			Vec3 result = ci.getReturnValue();
-			result = new Vec3(Math.max(MIN, result.x * factor), Math.max(MIN, result.y * factor), Math.max(MIN, result.z * factor));
+        if (factor != 1.0) {
+            Vec3 result = ci.getReturnValue();
+            result = new Vec3(Math.max(MIN, result.x * factor), Math.max(MIN, result.y * factor),
+                    Math.max(MIN, result.z * factor));
 
-			ci.setReturnValue(result);
-		}
-	}
+            ci.setReturnValue(result);
+        }
+    }
 }

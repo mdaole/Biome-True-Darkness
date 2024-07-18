@@ -1,0 +1,14 @@
+{
+    "required": true,
+    "package": "grondag.darkness.mixin",
+    "compatibilityLevel": "JAVA_21",
+    "mixins": [
+        "MixinGameRenderer",
+        "MixinLightTexture",
+        "MixinEndEffects",
+        "MixinNetherEffects"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

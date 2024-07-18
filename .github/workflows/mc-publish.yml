@@ -54,5 +54,7 @@ jobs:
 
           loaders: fabric
           game-versions: "${{env.MINECRAFT_VERSION}}"
-          dependencies: cloth-config
+          dependencies: |
+            fabric-api
+            cloth-config
           java: "${{env.JAVA_VERSION}}"

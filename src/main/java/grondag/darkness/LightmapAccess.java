@@ -21,7 +21,7 @@
 package grondag.darkness;
 
 public interface LightmapAccess {
-	boolean darkness_isDirty();
+    boolean darkness_isDirty();
 
-	float darkness_prevFlicker();
+    float darkness_prevFlicker();
 }

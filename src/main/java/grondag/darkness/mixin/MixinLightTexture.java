@@ -35,32 +35,32 @@ import grondag.darkness.LightmapAccess;
 
 @Mixin(LightTexture.class)
 public class MixinLightTexture implements LightmapAccess {
-	@Shadow
-	private NativeImage lightPixels;
-	@Shadow
-	private float blockLightRedFlicker;
-	@Shadow
-	private boolean updateLightTexture;
+    @Shadow
+    private NativeImage lightPixels;
+    @Shadow
+    private float blockLightRedFlicker;
+    @Shadow
+    private boolean updateLightTexture;
 
-	@Inject(method = "updateLightTexture", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/texture/DynamicTexture;upload()V"))
-	private void onUpload(CallbackInfo ci) {
-		if (Darkness.enabled && lightPixels != null) {
-			for (int b = 0; b < 16; b++) {
-				for (int s = 0; s < 16; s++) {
-					final int color = Darkness.darken(lightPixels.getPixelRGBA(b, s), b, s);
-					lightPixels.setPixelRGBA(b, s, color);
-				}
-			}
-		}
-	}
+    @Inject(method = "updateLightTexture", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/texture/DynamicTexture;upload()V"))
+    private void onUpload(CallbackInfo ci) {
+        if (Darkness.enabled && lightPixels != null) {
+            for (int b = 0; b < 16; b++) {
+                for (int s = 0; s < 16; s++) {
+                    final int color = Darkness.darken(lightPixels.getPixelRGBA(b, s), b, s);
+                    lightPixels.setPixelRGBA(b, s, color);
+                }
+            }
+        }
+    }
 
-	@Override
-	public float darkness_prevFlicker() {
-		return blockLightRedFlicker;
-	}
+    @Override
+    public float darkness_prevFlicker() {
+        return blockLightRedFlicker;
+    }
 
-	@Override
-	public boolean darkness_isDirty() {
-		return updateLightTexture;
-	}
+    @Override
+    public boolean darkness_isDirty() {
+        return updateLightTexture;
+    }
 }
