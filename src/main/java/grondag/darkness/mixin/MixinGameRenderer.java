@@ -35,9 +35,7 @@ import grondag.darkness.LightmapAccess;
 
 //#if MC >= 12100
 import net.minecraft.client.DeltaTracker;
-//#endif
-
-//#if MC <= 12004
+//#elseif MC <= 12004
 //$$ import com.mojang.blaze3d.vertex.PoseStack;
 //#endif
 
@@ -52,7 +50,7 @@ public class MixinGameRenderer {
     // spotless:off
     //#if MC >= 12100
     private void onRenderLevel(DeltaTracker deltaTracker, CallbackInfo ci) {
-    //#elif MC = 12006
+    //#elseif MC >= 12005
     //$$ private void onRenderLevel(float tickDelta, long nanos, CallbackInfo ci) {
     //#else
     //$$ private void onRenderLevel(float tickDelta, long nanos, PoseStack matrixStack, CallbackInfo ci) {
