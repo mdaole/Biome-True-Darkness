@@ -20,7 +20,6 @@
 
 package grondag.darkness.mixin;
 
-import net.minecraft.client.DeltaTracker;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -34,6 +33,14 @@ import net.minecraft.client.renderer.LightTexture;
 import grondag.darkness.Darkness;
 import grondag.darkness.LightmapAccess;
 
+//#if MC >= 12100
+import net.minecraft.client.DeltaTracker;
+//#endif
+
+//#if MC <= 12004
+//$$ import com.mojang.blaze3d.vertex.PoseStack;
+//#endif
+
 @Mixin(GameRenderer.class)
 public class MixinGameRenderer {
     @Shadow
@@ -42,13 +49,27 @@ public class MixinGameRenderer {
     private LightTexture lightTexture;
 
     @Inject(method = "renderLevel", at = @At(value = "HEAD"))
+    // spotless:off
+    //#if MC >= 12100
     private void onRenderLevel(DeltaTracker deltaTracker, CallbackInfo ci) {
+    //#elif MC = 12006
+    //$$ private void onRenderLevel(float tickDelta, long nanos, CallbackInfo ci) {
+    //#else
+    //$$ private void onRenderLevel(float tickDelta, long nanos, PoseStack matrixStack, CallbackInfo ci) {
+    //#endif
+    //spotless:on
         final LightmapAccess lightmap = (LightmapAccess) lightTexture;
 
         if (lightmap.darkness_isDirty()) {
             minecraft.getProfiler().push("lightTex");
+            // spotless:off
+            //#if MC >= 12100
             Darkness.updateLuminance(deltaTracker.getGameTimeDeltaTicks(), minecraft, (GameRenderer) (Object) this,
                     lightmap.darkness_prevFlicker());
+            //#else
+            //$$ Darkness.updateLuminance(tickDelta, minecraft, (GameRenderer) (Object) this, lightmap.darkness_prevFlicker());
+            //#endif
+            //spotless:on
             minecraft.getProfiler().pop();
         }
     }
