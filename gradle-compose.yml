@@ -15,7 +15,7 @@ replacements:
   homepageUrl: "https://modrinth.com/mod/true-darkness-fabric"
   sourcesUrl: "https://github.com/HaXrBOT/True-Darkness-Refabricated"
   issuesUrl: "https://github.com/HaXrBOT/True-Darkness-Refabricated/issues"
-  version: "1.0.6"
+  version: "1.0.7"
   breaks: ""
   name: "True Darkness Refabricated"
   id: "darkness"
@@ -26,6 +26,7 @@ replacements:
   curseforgeid: "906926"
   versionlessname: "TDRVersionless"
   mcpublishVersion: "3.3.0"
+  fabric_entrypoint_type: "main"
 enabledFlags:
   - autopublish
   - publishFabric
