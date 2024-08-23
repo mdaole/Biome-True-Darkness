@@ -21,20 +21,24 @@ public class DarknessInit implements ModInitializer {
             ServerLoginConnectionEvents.QUERY_START.register((handler, server, sender, synchronizer) -> {
                 FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer(5));
                 buf.writeVarInt(protocolVersion);
+                // spotless:off
+                //#if MC >= 12100
                 sender.sendPacket(ResourceLocation.parse(Darkness.MODID), buf);
+                //#elseif MC < 12100
+                //$$ sender.sendPacket(ResourceLocation.tryParse(Darkness.MODID), buf);
+                //#endif
+                //spotless:on
             });
-
+            // spotless:off
+            //#if MC >= 12100
             ServerLoginNetworking.registerGlobalReceiver(ResourceLocation.parse(Darkness.MODID),
+                    //#elseif MC < 12100
+                    //$$ ServerLoginNetworking.registerGlobalReceiver(ResourceLocation.tryParse(Darkness.MODID),
+                    //#endif
+                    //spotless:on
                     (server, handler, understood, buf, synchronizer, sender) -> {
                         if (!understood) {
-                            handler.disconnect(Component.literal("You are missing the mod: " + Darkness.MODNAME)); // you
-                                                                                                                   // can
-                                                                                                                   // replace
-                                                                                                                   // the
-                                                                                                                   // other
-                            // texts with translatable
-                            // keys, but not this one
-                            // since they wont have them
+                            handler.disconnect(Component.literal("You are missing the mod: " + Darkness.MODNAME));
                         }
                     });
         }

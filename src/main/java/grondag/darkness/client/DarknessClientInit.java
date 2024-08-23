@@ -16,8 +16,13 @@ public class DarknessClientInit implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         int protocolVersion = 0;
-
+        // spotless:off
+        //#if MC >= 12100
         ClientLoginNetworking.registerGlobalReceiver(ResourceLocation.parse(Darkness.MODID),
+                //#elseif MC < 12100
+                //$$ ClientLoginNetworking.registerGlobalReceiver(ResourceLocation.tryParse(Darkness.MODID),
+                //#endif
+                //spotless:on
                 (client, handler, buf, callback) -> {
                     int version = buf.readVarInt();
                     if (version > protocolVersion) {
