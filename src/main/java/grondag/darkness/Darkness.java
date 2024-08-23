@@ -20,35 +20,37 @@
 
 package grondag.darkness;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Properties;
-
 import grondag.darkness.config.DarknessConfig;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
+import grondag.darkness.config.DarknessConfigModel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.DimensionType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import net.minecraft.util.Mth;
+
+import static grondag.darkness.DarknessInit.CONFIG;
+
+
 
 public class Darkness {
-
-    public static final String MODID = "TrueDarknessRefabricated";
+    public static final String MODID = "darkness";
     public static Logger LOG = LogManager.getLogger("TrueDarknessRefabricated");
+
+
 
     static double darkNetherFogEffective;
     static double darkEndFogEffective;
 
-    static {
+    //boolean test = CONFIG.darkEnd();
+
+    /*static {
         try {
             DarknessConfig.getInstance().darkNetherFog = Mth.clamp(DarknessConfig.getInstance().darkNetherFog, 0.0,
                     1.0);
@@ -57,22 +59,22 @@ public class Darkness {
             LOG.warn("[Darkness] Invalid configuration value for 'dark_nether_fog'. Using default value.");
         }
         try {
-            DarknessConfig.getInstance().darkEndFog = Mth.clamp(DarknessConfig.getInstance().darkEndFog, 0.0, 1.0);
+            DarknessConfig.getInstance().darkEndFog = Mth.clamp(DarknessConfigModel.getInstance().darkEndFog, 0.0, 1.0);
         } catch (final Exception e) {
             DarknessConfig.getInstance().darkEndFog = 0.0;
             LOG.warn("[Darkness] Invalid configuration value for 'dark_end_fog'. Using default value.");
         }
         computeConfigValues();
-    }
+    }*/
 
     private static void computeConfigValues() {
-        darkNetherFogEffective = DarknessConfig.getInstance().darkNether ? DarknessConfig.getInstance().darkNetherFog
+        darkNetherFogEffective = CONFIG.darkNether() ? CONFIG.darkNetherFog()
                 : 1.0;
-        darkEndFogEffective = DarknessConfig.getInstance().darkEnd ? DarknessConfig.getInstance().darkEndFog : 1.0;
+        darkEndFogEffective = CONFIG.darkEnd() ? CONFIG.darkEndFog() : 1.0;
     }
 
     public static boolean blockLightOnly() {
-        return DarknessConfig.getInstance().blockLightOnly;
+        return CONFIG.blockLightOnly();
     }
 
     public static double darkNetherFog() {
@@ -87,26 +89,26 @@ public class Darkness {
         final ResourceKey<Level> dimType = world.dimension();
 
         if (dimType == Level.OVERWORLD) {
-            return DarknessConfig.getInstance().darkOverworld;
+            return CONFIG.darkOverworld();
         } else if (dimType == Level.NETHER) {
-            return DarknessConfig.getInstance().darkNether;
+            return CONFIG.darkNether();
         } else if (dimType == Level.END) {
-            return DarknessConfig.getInstance().darkEnd;
+            return CONFIG.darkEnd();
         } else if (world.dimensionType().hasSkyLight()) {
-            return DarknessConfig.getInstance().darkDefault;
+            return CONFIG.darkDefault();
         } else {
-            return DarknessConfig.getInstance().darkSkyless;
+            return CONFIG.darkSkyless();
         }
     }
 
     private static float skyFactor(Level world) {
-        if (!DarknessConfig.getInstance().blockLightOnly && isDark(world)) {
+        if (!CONFIG.blockLightOnly() && isDark(world)) {
             if (world.dimensionType().hasSkyLight()) {
                 final float angle = world.getTimeOfDay(0);
 
                 if (angle > 0.25f && angle < 0.75f) {
                     final float oldWeight = Math.max(0, (Math.abs(angle - 0.5f) - 0.2f)) * 20;
-                    final float moon = DarknessConfig.getInstance().ignoreMoonPhase ? 0 : world.getMoonBrightness();
+                    final float moon = CONFIG.ignoreMoonPhase() ? 0 : world.getMoonBrightness();
                     return Mth.lerp(oldWeight * oldWeight * oldWeight, moon * moon, 1f);
                 } else {
                     return 1;
@@ -140,7 +142,7 @@ public class Darkness {
     }
 
     public static void updateLuminance(float tickDelta, Minecraft client, GameRenderer worldRenderer,
-            float prevFlicker) {
+                                       float prevFlicker) {
         final ClientLevel world = client.level;
 
         if (world != null) {

@@ -1,1 +1,2 @@
 - 1.21.1 support.
+- Implemented owo-config to replace cloth-config.

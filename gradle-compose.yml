@@ -2,9 +2,16 @@ version: '0.0.2'
 source: "https://github.com/HaXrBOT/ProcessedModTemplate/tree/master"
 replacements:
   dependencies: ""
-  fabric_dependencies: modApi ("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}")
-  forge_dependencies: implementation "maven.modrinth:cloth-config:${project.cloth_config_version}+forge"
-  neoforge_dependencies: implementation "maven.modrinth:cloth-config:${project.cloth_config_version}+neoforge"
+  fabric_dependencies: |
+    //modApi ("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}")
+            modImplementation "io.wispforest:owo-lib:${project.owo_version}"
+            include "io.wispforest:owo-sentinel:${project.owo_version}"
+            annotationProcessor modImplementation("io.wispforest:owo-lib:${project.owo_version}")
+
+  forge_dependencies: "" #implementation "maven.modrinth:cloth-config:${project.cloth_config_version}+forge"
+  neoforge_dependencies: "" #implementation "maven.modrinth:cloth-config:${project.cloth_config_version}+neoforge"
+  repositories: |
+    maven { url 'https://maven.wispforest.io/releases/' }
   mcpublish_dependencies: "cloth-config"
   licensename: "LICENSE"
   author: "HaXr"
@@ -20,7 +27,7 @@ replacements:
   name: "True Darkness Refabricated"
   id: "darkness"
   fabric_entrypoint: "grondag.darkness.DarknessInit"
-  fabric_modmenu_entrypoint: "grondag.darkness.config.ModMenuIntegration"
+  fabric_modmenu_entrypoint: "" #"grondag.darkness.config.ModMenuIntegration"
   relocationpackage: "grondag.darkness"
   modrinthid: "Pf8PJBb5"
   curseforgeid: "906926"
