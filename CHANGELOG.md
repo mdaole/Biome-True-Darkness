@@ -1,5 +1,5 @@
 - 1.21.1 support.
-- Switched to use owo-config.
-- Implemented server to client config synchronization.
-- Added config option "requireMod" for servers, which prevents clients from joining without having the mod installed.
+- Switched to using owo-config.
+- Implemented server-to-client config synchronization.
+- Added "requireMod" config option for servers, which prevents clients from joining without the mod installed.
 - Fixed crashing issue when the mod is installed on servers.
