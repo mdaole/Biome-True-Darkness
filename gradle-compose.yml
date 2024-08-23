@@ -27,7 +27,7 @@ replacements:
   name: "True Darkness Refabricated"
   id: "darkness"
   fabric_entrypoint: "grondag.darkness.DarknessInit"
-  fabric_modmenu_entrypoint: "" #"grondag.darkness.config.ModMenuIntegration"
+  fabric_modmenu_entrypoint: "grondag.darkness.config.ModMenuIntegration"
   relocationpackage: "grondag.darkness"
   modrinthid: "Pf8PJBb5"
   curseforgeid: "906926"
