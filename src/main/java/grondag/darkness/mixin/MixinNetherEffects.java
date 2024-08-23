@@ -20,6 +20,8 @@
 
 package grondag.darkness.mixin;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -31,6 +33,7 @@ import net.minecraft.world.phys.Vec3;
 import grondag.darkness.Darkness;
 
 @Mixin(DimensionSpecialEffects.NetherEffects.class)
+@Environment(EnvType.CLIENT)
 public class MixinNetherEffects {
     private static double MIN = 0.029999999329447746D;
 

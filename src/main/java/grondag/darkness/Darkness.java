@@ -22,6 +22,8 @@ package grondag.darkness;
 
 import grondag.darkness.config.DarknessConfig;
 import grondag.darkness.config.DarknessConfigModel;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.GameRenderer;
@@ -37,8 +39,7 @@ import net.minecraft.util.Mth;
 
 import static grondag.darkness.DarknessInit.CONFIG;
 
-
-
+@Environment(EnvType.CLIENT)
 public class Darkness {
     public static final String MODID = "darkness";
     public static Logger LOG = LogManager.getLogger("TrueDarknessRefabricated");

@@ -1,10 +1,15 @@
 package grondag.darkness.config;
 import grondag.darkness.Darkness;
 
+import io.wispforest.owo.config.Option;
 import io.wispforest.owo.config.annotation.Config;
 import io.wispforest.owo.config.annotation.Modmenu;
+import io.wispforest.owo.config.annotation.Sync;
+
+// owo-config documentation: https://docs.wispforest.io/owo/config/getting-started/
 
 @Modmenu(modId = Darkness.MODID)
+@Sync(Option.SyncMode.OVERRIDE_CLIENT)
 @Config(name = Darkness.MODID, wrapperName = "DarknessConfig")
 public class DarknessConfigModel {
     public boolean darkOverworld = true;

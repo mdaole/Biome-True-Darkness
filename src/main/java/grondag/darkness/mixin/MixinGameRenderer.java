@@ -20,6 +20,8 @@
 
 package grondag.darkness.mixin;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -40,6 +42,7 @@ import net.minecraft.client.DeltaTracker;
 //#endif
 
 @Mixin(GameRenderer.class)
+@Environment(EnvType.CLIENT)
 public class MixinGameRenderer {
     @Shadow
     private Minecraft minecraft;

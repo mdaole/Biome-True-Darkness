@@ -20,6 +20,8 @@
 
 package grondag.darkness.mixin;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -34,6 +36,7 @@ import grondag.darkness.Darkness;
 import grondag.darkness.LightmapAccess;
 
 @Mixin(LightTexture.class)
+@Environment(EnvType.CLIENT)
 public class MixinLightTexture implements LightmapAccess {
     @Shadow
     private NativeImage lightPixels;

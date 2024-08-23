@@ -1,2 +1,4 @@
 - 1.21.1 support.
 - Implemented owo-config to replace cloth-config.
+- Implemented server to client config synchronization.
+- Fixed crashing issue when the mod is installed on a server.
