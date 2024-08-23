@@ -42,35 +42,28 @@ import static grondag.darkness.DarknessInit.CONFIG;
 @Environment(EnvType.CLIENT)
 public class Darkness {
     public static final String MODID = "darkness";
-    public static Logger LOG = LogManager.getLogger("TrueDarknessRefabricated");
-
-
+    public static final String MODNAME = "TrueDarknessRefabricated";
+    public static Logger LOG = LogManager.getLogger(MODNAME);
 
     static double darkNetherFogEffective;
     static double darkEndFogEffective;
 
-    //boolean test = CONFIG.darkEnd();
+    // boolean test = CONFIG.darkEnd();
 
-    /*static {
-        try {
-            DarknessConfig.getInstance().darkNetherFog = Mth.clamp(DarknessConfig.getInstance().darkNetherFog, 0.0,
-                    1.0);
-        } catch (final Exception e) {
-            DarknessConfig.getInstance().darkNetherFog = 0.5;
-            LOG.warn("[Darkness] Invalid configuration value for 'dark_nether_fog'. Using default value.");
-        }
-        try {
-            DarknessConfig.getInstance().darkEndFog = Mth.clamp(DarknessConfigModel.getInstance().darkEndFog, 0.0, 1.0);
-        } catch (final Exception e) {
-            DarknessConfig.getInstance().darkEndFog = 0.0;
-            LOG.warn("[Darkness] Invalid configuration value for 'dark_end_fog'. Using default value.");
-        }
-        computeConfigValues();
-    }*/
+    /*
+     * static { try { DarknessConfig.getInstance().darkNetherFog =
+     * Mth.clamp(DarknessConfig.getInstance().darkNetherFog, 0.0, 1.0); } catch
+     * (final Exception e) { DarknessConfig.getInstance().darkNetherFog = 0.5; LOG.
+     * warn("[Darkness] Invalid configuration value for 'dark_nether_fog'. Using default value."
+     * ); } try { DarknessConfig.getInstance().darkEndFog =
+     * Mth.clamp(DarknessConfigModel.getInstance().darkEndFog, 0.0, 1.0); } catch
+     * (final Exception e) { DarknessConfig.getInstance().darkEndFog = 0.0; LOG.
+     * warn("[Darkness] Invalid configuration value for 'dark_end_fog'. Using default value."
+     * ); } computeConfigValues(); }
+     */
 
     private static void computeConfigValues() {
-        darkNetherFogEffective = CONFIG.darkNether() ? CONFIG.darkNetherFog()
-                : 1.0;
+        darkNetherFogEffective = CONFIG.darkNether() ? CONFIG.darkNetherFog() : 1.0;
         darkEndFogEffective = CONFIG.darkEnd() ? CONFIG.darkEndFog() : 1.0;
     }
 
@@ -143,7 +136,7 @@ public class Darkness {
     }
 
     public static void updateLuminance(float tickDelta, Minecraft client, GameRenderer worldRenderer,
-                                       float prevFlicker) {
+            float prevFlicker) {
         final ClientLevel world = client.level;
 
         if (world != null) {

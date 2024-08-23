@@ -1,4 +1,5 @@
 package grondag.darkness.config;
+
 import grondag.darkness.Darkness;
 
 import io.wispforest.owo.config.Option;
@@ -21,4 +22,5 @@ public class DarknessConfigModel {
     public boolean darkSkyless = true;
     public boolean blockLightOnly = false;
     public boolean ignoreMoonPhase = false;
+    public boolean requireMod = false;
 }

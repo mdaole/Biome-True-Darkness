@@ -17,5 +17,6 @@
     "text.config.darkness.option.darkNetherFog": "Dark Nether Fog [Value between 0.0 and 1.0]",
     "text.config.darkness.help.darkNetherFog": "Amount of fog in Nether",
     "text.config.darkness.option.darkEndFog": "Dark End Fog [Value between 0.0 and 1.0]",
-    "text.config.darkness.help.darkEndFog": "Amount of fog in The End"
+    "text.config.darkness.help.darkEndFog": "Amount of fog in The End",
+    "text.config.darkness.option.requireMod": "Require mod to join [Server only]"
 }

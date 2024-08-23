@@ -20,4 +20,23 @@ jobs:
       #   uses: softprops/action-gh-release@v1
       #   with:
       #     files: 'versions/**/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
-$autoreleasesteps$
+      - name: Publish-1.21-fabric-Curseforge
+        uses: Kir-Antipov/mc-publish@v3.3.0
+        with:
+          curseforge-id: 906926
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          loaders: fabric
+          name: True Darkness Refabricated v${{github.ref_name}} for Fabric 1.21(.1)
+          files: 'versions/1.21-fabric/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
+          game-versions: 1.21.x
+          dependencies: owo-lib
+      - name: Publish-1.21-fabric-Modrinth
+        uses: Kir-Antipov/mc-publish@v3.3.0
+        with:
+          modrinth-id: Pf8PJBb5
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          loaders: fabric
+          name: True Darkness Refabricated v${{github.ref_name}} for Fabric 1.21(.1)
+          files: 'versions/1.21-fabric/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
+          game-versions: 1.21.x
+          dependencies: owo-lib
