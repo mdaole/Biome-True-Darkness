@@ -7,7 +7,8 @@ replacements:
             modImplementation "io.wispforest:owo-lib:${project.owo_version}"
             include "io.wispforest:owo-sentinel:${project.owo_version}"
             annotationProcessor modImplementation("io.wispforest:owo-lib:${project.owo_version}")
-            if (mcVersion != 12006){modImplementation "io.github.apace100:apoli:${project.apoli_version}"}  // If statement ensures that it doesn't get applied to 1.20.6
+            if (mcVersion != 12006){ modApi "io.github.apace100:apoli:${project.apoli_version}" }  // If statement ensures that it doesn't get applied to 1.20.6
+            if (mcVersion != 12006){ modLocalRuntime "maven.modrinth:origins:${project.origins_version}" }  // If statement ensures that it doesn't get applied to 1.20.6. (Note that this causes runClient to crash upon opening the world creation screen in 1.20.1. When testing that Minecraft version, insert Origins jar manually)
 
   forge_dependencies: "" #implementation "maven.modrinth:cloth-config:${project.cloth_config_version}+forge"
   neoforge_dependencies: "" #implementation "maven.modrinth:cloth-config:${project.cloth_config_version}+neoforge"
@@ -17,6 +18,7 @@ replacements:
     	maven { url = 'https://maven.ladysnake.org/snapshots' }
     	maven { url = "https://maven.quiltmc.org/repository/release" }
         maven { url "https://maven.terraformersmc.com/" }
+        if (mcVersion <= 12004){ maven { url "https://maven.jamieswhiteshirt.com/libs-release" } } // If statement ensures that it only gets applied to 1.20.4 and below (Not needed above as this is in vanilla from 1.20.5 onwards)
   mcpublish_dependencies: "owo-lib"
   licensename: "LICENSE"
   author: "HaXr"
@@ -27,7 +29,7 @@ replacements:
   homepageUrl: "https://modrinth.com/mod/true-darkness-fabric"
   sourcesUrl: "https://github.com/HaXrBOT/True-Darkness-Refabricated"
   issuesUrl: "https://github.com/HaXrBOT/True-Darkness-Refabricated/issues"
-  version: "1.1.0"
+  version: "1.1.1"
   breaks: ""
   name: "True Darkness Refabricated"
   id: "darkness"

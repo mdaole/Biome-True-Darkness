@@ -35,6 +35,15 @@ import net.minecraft.world.level.dimension.DimensionType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+// Imports for Apoli NightVisionPower compat
+//#if MC >= 12100
+import io.github.apace100.apoli.component.PowerHolderComponent;
+import io.github.apace100.apoli.power.type.NightVisionPowerType;
+//#elseif MC <= 12004
+//$$ import io.github.apace100.apoli.component.PowerHolderComponent;
+//$$ import io.github.apace100.apoli.power.NightVisionPower;
+//#endif
+
 import net.minecraft.util.Mth;
 
 import static grondag.darkness.DarknessInit.CONFIG;
@@ -138,11 +147,23 @@ public class Darkness {
     public static void updateLuminance(float tickDelta, Minecraft client, GameRenderer worldRenderer,
             float prevFlicker) {
         final ClientLevel world = client.level;
-
+        // spotless:off
+        //#if MC >= 12100
+        boolean hasApoliNightVisionPower = PowerHolderComponent.hasPowerType(client.player, NightVisionPowerType.class);
+        //#elseif MC <= 12004
+        //$$ boolean hasApoliNightVisionPower = PowerHolderComponent.hasPower(client.player, NightVisionPower.class);
+        //#endif
+        //spotless:on
         if (world != null) {
             if (!isDark(world) || client.player.hasEffect(MobEffects.NIGHT_VISION)
                     || (client.player.hasEffect(MobEffects.CONDUIT_POWER) && client.player.getWaterVision() > 0)
-                    || world.getSkyFlashTime() > 0) {
+                    || world.getSkyFlashTime() > 0
+                    // spotless:off
+                    //#if MC != 12006
+                    || hasApoliNightVisionPower
+                    //#endif
+                    //spotless:on
+            ) {
                 enabled = false;
                 return;
             } else {

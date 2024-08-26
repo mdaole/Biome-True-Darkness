@@ -1,5 +1,1 @@
-- 1.21.1 support.
-- Switched to using owo-config.
-- Implemented server-to-client config synchronization.
-- Added "requireMod" config option for servers, which prevents clients from joining without the mod installed.
-- Fixed crashing issue when the mod is installed on servers.
+- Fixed conflict with nightvision powers from the Origins mod [[#7]](https://github.com/HaXrBOT/True-Darkness-Refabricated/issues/7)
