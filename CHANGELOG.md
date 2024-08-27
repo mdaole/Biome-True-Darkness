@@ -1,1 +1,2 @@
-- Fixed conflict with nightvision powers from the Origins mod [[#7]](https://github.com/HaXrBOT/True-Darkness-Refabricated/issues/7)
+- Fixed crashing issue when Origins is not installed.
+

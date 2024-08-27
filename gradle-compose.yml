@@ -7,9 +7,11 @@ replacements:
             modImplementation "io.wispforest:owo-lib:${project.owo_version}"
             include "io.wispforest:owo-sentinel:${project.owo_version}"
             annotationProcessor modImplementation("io.wispforest:owo-lib:${project.owo_version}")
-            if (mcVersion != 12006){ modApi "io.github.apace100:apoli:${project.apoli_version}" }  // If statement ensures that it doesn't get applied to 1.20.6
-            if (mcVersion != 12006){ modLocalRuntime "maven.modrinth:origins:${project.origins_version}" }  // If statement ensures that it doesn't get applied to 1.20.6. (Note that this causes runClient to crash upon opening the world creation screen in 1.20.1. When testing that Minecraft version, insert Origins jar manually)
-
+            
+            if (mcVersion != 12006){ modImplementation "io.github.apace100:apoli:${project.apoli_version}" }  // If statement ensures that it doesn't get applied to 1.20.6
+            if (mcVersion != 12006){ modRuntimeOnly "maven.modrinth:origins:${project.origins_version}" }  // If statement ensures that it doesn't get applied to 1.20.6. (Note that this causes runClient to crash upon opening the world creation screen in 1.20.1. When testing that Minecraft version, insert Origins jar manually)
+            // For testing without Origins
+            // if (mcVersion != 12006){ modCompileOnly "io.github.apace100:apoli:${project.apoli_version}" }  // If statement ensures that it doesn't get applied to 1.20.6
   forge_dependencies: "" #implementation "maven.modrinth:cloth-config:${project.cloth_config_version}+forge"
   neoforge_dependencies: "" #implementation "maven.modrinth:cloth-config:${project.cloth_config_version}+neoforge"
   repositories: |
@@ -29,7 +31,7 @@ replacements:
   homepageUrl: "https://modrinth.com/mod/true-darkness-fabric"
   sourcesUrl: "https://github.com/HaXrBOT/True-Darkness-Refabricated"
   issuesUrl: "https://github.com/HaXrBOT/True-Darkness-Refabricated/issues"
-  version: "1.1.1"
+  version: "1.1.2"
   breaks: ""
   name: "True Darkness Refabricated"
   id: "darkness"
