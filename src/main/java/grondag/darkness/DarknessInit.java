@@ -8,8 +8,13 @@ import net.fabricmc.fabric.api.networking.v1.ServerLoginNetworking;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DarknessInit implements ModInitializer {
+    public static final String MOD_ID = "darkness";
+    public static final String MOD_NAME = "TrueDarknessRefabricated";
+    public static Logger LOG = LogManager.getLogger(MOD_NAME);
     public static final DarknessConfig CONFIG = DarknessConfig.createAndLoad();
 
     @Override
@@ -22,23 +27,23 @@ public class DarknessInit implements ModInitializer {
                 FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer(5));
                 buf.writeVarInt(protocolVersion);
                 // spotless:off
-                //#if MC >= 12100
-                sender.sendPacket(ResourceLocation.parse(Darkness.MODID), buf);
-                //#elseif MC < 12100
-                //$$ sender.sendPacket(ResourceLocation.tryParse(Darkness.MODID), buf);
-                //#endif
+                //? if >=1.21 {
+                sender.sendPacket(ResourceLocation.parse(MOD_ID), buf);
+                //?} elseif < 1.21
+                /*sender.sendPacket(ResourceLocation.tryParse(MOD_ID), buf);*/
+                //?}
                 //spotless:on
             });
             // spotless:off
-            //#if MC >= 12100
-            ServerLoginNetworking.registerGlobalReceiver(ResourceLocation.parse(Darkness.MODID),
-                    //#elseif MC < 12100
-                    //$$ ServerLoginNetworking.registerGlobalReceiver(ResourceLocation.tryParse(Darkness.MODID),
-                    //#endif
+            //? if >=1.21 {
+            ServerLoginNetworking.registerGlobalReceiver(ResourceLocation.parse(MOD_ID),
+                    //?} elseif <1.21
+                    //$$ ServerLoginNetworking.registerGlobalReceiver(ResourceLocation.tryParse(MOD_ID),
+                    //?}
                     //spotless:on
                     (server, handler, understood, buf, synchronizer, sender) -> {
                         if (!understood) {
-                            handler.disconnect(Component.literal("You are missing the mod: " + Darkness.MODNAME));
+                            handler.disconnect(Component.literal("You are missing the mod: " + MOD_NAME));
                         }
                     });
         }

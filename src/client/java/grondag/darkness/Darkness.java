@@ -21,8 +21,6 @@
 package grondag.darkness;
 
 import grondag.darkness.compat.ApoliCompat;
-import grondag.darkness.config.DarknessConfig;
-import grondag.darkness.config.DarknessConfigModel;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
@@ -42,9 +40,6 @@ import static grondag.darkness.DarknessInit.CONFIG;
 
 @Environment(EnvType.CLIENT)
 public class Darkness {
-    public static final String MODID = "darkness";
-    public static final String MODNAME = "TrueDarknessRefabricated";
-    public static Logger LOG = LogManager.getLogger(MODNAME);
 
     static double darkNetherFogEffective;
     static double darkEndFogEffective;

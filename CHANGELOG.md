@@ -1,2 +1,2 @@
-- Fixed crashing issue when Origins is not installed.
-
+- Changed mod description in Mod Menu.
+- Switched to use Stonecutter toolchain.
