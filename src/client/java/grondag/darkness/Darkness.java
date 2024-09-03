@@ -140,11 +140,9 @@ public class Darkness {
             if (!isDark(world) || client.player.hasEffect(MobEffects.NIGHT_VISION)
                     || (client.player.hasEffect(MobEffects.CONDUIT_POWER) && client.player.getWaterVision() > 0)
                     || world.getSkyFlashTime() > 0
-                    // spotless:off
-                    //#if MC != 12006
+                    //? if !(=1.20.5 || =1.20.6) {
                     || apoliCompat.isApoliNightVisionPower(client)
-                    //#endif
-                    //spotless:on
+                    //?}
             ) {
                 enabled = false;
                 return;

@@ -35,11 +35,11 @@ import net.minecraft.client.renderer.LightTexture;
 import grondag.darkness.Darkness;
 import grondag.darkness.LightmapAccess;
 
-//#if MC >= 12100
+//? if >=1.21 {
 import net.minecraft.client.DeltaTracker;
-//#elseif MC <= 12004
-//$$ import com.mojang.blaze3d.vertex.PoseStack;
-//#endif
+//?} else if <=1.20.4 {
+/*import com.mojang.blaze3d.vertex.PoseStack;
+*///?}
 
 @Mixin(GameRenderer.class)
 @Environment(EnvType.CLIENT)
@@ -50,27 +50,23 @@ public class MixinGameRenderer {
     private LightTexture lightTexture;
 
     @Inject(method = "renderLevel", at = @At(value = "HEAD"))
-    // spotless:off
-    //#if MC >= 12100
+    //? if >=1.21 {
     private void onRenderLevel(DeltaTracker deltaTracker, CallbackInfo ci) {
-    //#elseif MC >= 12005
-    //$$ private void onRenderLevel(float tickDelta, long nanos, CallbackInfo ci) {
-    //#else
-    //$$ private void onRenderLevel(float tickDelta, long nanos, PoseStack matrixStack, CallbackInfo ci) {
-    //#endif
-    //spotless:on
+    //?} else if >=1.20.5 {
+    /*private void onRenderLevel(float tickDelta, long nanos, CallbackInfo ci) {
+    *///?} else {
+    /*private void onRenderLevel(float tickDelta, long nanos, PoseStack matrixStack, CallbackInfo ci) {
+    *///?}
         final LightmapAccess lightmap = (LightmapAccess) lightTexture;
 
         if (lightmap.darkness_isDirty()) {
             minecraft.getProfiler().push("lightTex");
-            // spotless:off
-            //#if MC >= 12100
+            //? if >=1.21 {
             Darkness.updateLuminance(deltaTracker.getGameTimeDeltaTicks(), minecraft, (GameRenderer) (Object) this,
-                    lightmap.darkness_prevFlicker());
-            //#else
-            //$$ Darkness.updateLuminance(tickDelta, minecraft, (GameRenderer) (Object) this, lightmap.darkness_prevFlicker());
-            //#endif
-            //spotless:on
+                lightmap.darkness_prevFlicker());
+            //?} else {
+            /*Darkness.updateLuminance(tickDelta, minecraft, (GameRenderer) (Object) this, lightmap.darkness_prevFlicker());
+            *///?}
             minecraft.getProfiler().pop();
         }
     }

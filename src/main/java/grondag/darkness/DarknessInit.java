@@ -26,21 +26,17 @@ public class DarknessInit implements ModInitializer {
             ServerLoginConnectionEvents.QUERY_START.register((handler, server, sender, synchronizer) -> {
                 FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer(5));
                 buf.writeVarInt(protocolVersion);
-                // spotless:off
                 //? if >=1.21 {
                 sender.sendPacket(ResourceLocation.parse(MOD_ID), buf);
-                //?} elseif < 1.21
-                /*sender.sendPacket(ResourceLocation.tryParse(MOD_ID), buf);*/
-                //?}
-                //spotless:on
+                //?} else if <1.21 {
+                /*sender.sendPacket(ResourceLocation.tryParse(MOD_ID), buf);
+                *///?}
             });
-            // spotless:off
             //? if >=1.21 {
-            ServerLoginNetworking.registerGlobalReceiver(ResourceLocation.parse(MOD_ID),
-                    //?} elseif <1.21
-                    //$$ ServerLoginNetworking.registerGlobalReceiver(ResourceLocation.tryParse(MOD_ID),
-                    //?}
-                    //spotless:on
+             ServerLoginNetworking.registerGlobalReceiver(ResourceLocation.parse(MOD_ID),
+             //?} else if <1.21 {
+            /*ServerLoginNetworking.registerGlobalReceiver(ResourceLocation.tryParse(MOD_ID),
+            *///?}
                     (server, handler, understood, buf, synchronizer, sender) -> {
                         if (!understood) {
                             handler.disconnect(Component.literal("You are missing the mod: " + MOD_NAME));
