@@ -35,7 +35,8 @@
   "depends": {
     "fabricloader": ">=0.15",
     "minecraft": "${mcdep}",
-    "fabric-api": "*"
+    "fabric-api": "*",
+    "owo-lib": "*"
   },
   "custom": {
     "modmenu": {

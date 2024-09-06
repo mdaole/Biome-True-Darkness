@@ -1,3 +1,6 @@
+import org.gradle.kotlin.dsl.support.uppercaseFirstChar
+import java.util.*
+
 plugins {
     `maven-publish`
     id("fabric-loom")
@@ -134,3 +137,53 @@ tasks.register<Copy>("buildAndCollect") {
     into(rootProject.layout.buildDirectory.file("libs/${mod.version}"))
     dependsOn("build")
 }
+
+
+/**
+ * This function is responsible for writing the publishing GitHub-Action workflow when building, and runs for each active version.
+ */
+fun appendGithubActionPublish() {
+    // This
+
+    var actionFile = file("$rootDir/.github/workflows/publish.yml")
+    var releaseText = StringBuilder()
+
+    var mcpublishVersion = "3.3.0"
+
+    val curseforgeid = property("publish.curseforge").toString()
+    val modrinthid = property("publish.modrinth").toString()
+    //val dependencies = property("publish.dependencies").toString()
+    //val mc_targets = property("mod.mc_targets").toString()
+    val mc_title = property("mod.mc_title").toString()
+    val modloader = property("mod.loader").toString().uppercaseFirstChar()
+
+    val version = "$mcVersion-$modloader"
+
+    // Append stuff for CurseForge publishing
+    releaseText.append("      - name: Publish-$version-Curseforge\n")
+    releaseText.append("        uses: Kir-Antipov/mc-publish@v$mcpublishVersion\n")
+    releaseText.append("        with:\n")
+    releaseText.append("          curseforge-id: $curseforgeid\n")
+    releaseText.append("          curseforge-token: \${{ secrets.CURSEFORGE_TOKEN }}\n")
+    // releaseText.append("          loaders: ${modloader.lowercase()}\n")
+    releaseText.append("          name: v\${{github.ref_name}} for $modloader $mc_title\n")
+    releaseText.append("          files: 'versions/${version.lowercase()}/build/libs/!(*-@(dev|sources|javadoc|all)).jar'\n")
+    // releaseText.append("          game-versions: $mc_targets\n");
+    // releaseText.append("          dependencies: $dependencies\n");
+
+    // Append stuff for Modrinth publishing
+    releaseText.append("      - name: Publish-$version-Modrinth\n")
+    releaseText.append("        uses: Kir-Antipov/mc-publish@v$mcpublishVersion\n")
+    releaseText.append("        with:\n")
+    releaseText.append("          modrinth-id: $modrinthid\n")
+    releaseText.append("          modrinth-token: \${{ secrets.MODRINTH_TOKEN }}\n")
+    // releaseText.append("          loaders: ${modloader.lowercase()}\n")
+    releaseText.append("          name: v\${{github.ref_name}} for $modloader $mc_title\n")
+    releaseText.append("          files: 'versions/${version.lowercase()}/build/libs/!(*-@(dev|sources|javadoc|all)).jar'\n")
+    // releaseText.append("          game-versions: $mc_targets\n");
+    // releaseText.append("          dependencies: $dependencies\n");
+
+    actionFile.appendText(releaseText.toString())
+}
+
+appendGithubActionPublish()

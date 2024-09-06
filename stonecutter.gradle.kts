@@ -26,3 +26,43 @@ stonecutter configureEach {
     dependency("fapi", project.property("deps.fabric_api").toString())
 }
 */
+
+
+// GitHub Action Stuff
+var releaseText = StringBuilder()
+
+releaseText.append("name: Create Release\n")
+
+releaseText.append("on:\n")
+releaseText.append("  release:\n")
+releaseText.append("    types: [published]\n")
+
+releaseText.append("jobs:\n")
+releaseText.append("  build:\n")
+releaseText.append("    runs-on: ubuntu-latest\n")
+releaseText.append("    steps:\n")
+releaseText.append("      - name: checkout repository\n")
+releaseText.append("        uses: actions/checkout@v2\n")
+releaseText.append("      - name: setup jdk 21\n")
+releaseText.append("        uses: actions/setup-java@v1\n")
+releaseText.append("        with:\n")
+releaseText.append("          java-version: 21\n")
+releaseText.append("      - name: make gradle wrapper executable\n")
+releaseText.append("        run: chmod +x ./gradlecw\n")
+releaseText.append("      - name: build\n")
+releaseText.append("        run: ./gradlecw build -Pbuild.release=true\n")
+
+
+
+
+var actionFile = file("$rootDir/.github/workflows/publish.yml")
+if (actionFile.exists()) {
+    actionFile.writeText(releaseText.toString())
+}
+else {
+    actionFile.createNewFile()
+    actionFile.writeText(releaseText.toString())
+}
+
+
+
