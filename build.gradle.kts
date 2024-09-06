@@ -20,7 +20,7 @@ val deps = ModDependencies()
 val mcVersion = stonecutter.current.version
 val mcDep = property("mod.mc_dep").toString()
 val modId = mod.id
-version = "${mod.version}+$mcVersion"
+version = "fabric-${mod.version}+mc$mcVersion"
 group = mod.group
 base { archivesName.set(mod.id) }
 
