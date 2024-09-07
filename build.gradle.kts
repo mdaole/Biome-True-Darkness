@@ -160,7 +160,7 @@ fun appendGithubActionPublish() {
     val version = "$mcVersion-$modloader"
 
     // Append stuff for CurseForge publishing
-    releaseText.append("      - name: Publish-$version-Curseforge\n")
+    releaseText.append("\n      - name: Publish-$version-Curseforge\n")
     releaseText.append("        uses: Kir-Antipov/mc-publish@v$mcpublishVersion\n")
     releaseText.append("        with:\n")
     releaseText.append("          curseforge-id: $curseforgeid\n")
@@ -172,7 +172,7 @@ fun appendGithubActionPublish() {
     // releaseText.append("          dependencies: $dependencies\n");
 
     // Append stuff for Modrinth publishing
-    releaseText.append("      - name: Publish-$version-Modrinth\n")
+    releaseText.append("\n      - name: Publish-$version-Modrinth\n")
     releaseText.append("        uses: Kir-Antipov/mc-publish@v$mcpublishVersion\n")
     releaseText.append("        with:\n")
     releaseText.append("          modrinth-id: $modrinthid\n")
