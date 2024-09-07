@@ -12,6 +12,7 @@ class ModData {
     val name = property("mod.name").toString()
     val version = property("mod.version").toString()
     val group = property("mod.group").toString()
+    val loader = property("mod.loader").toString()
 }
 
 class ModDependencies {
@@ -23,7 +24,7 @@ val deps = ModDependencies()
 val mcVersion = stonecutter.current.version
 val mcDep = property("mod.mc_dep").toString()
 val modId = mod.id
-version = "fabric-${mod.version}+mc$mcVersion"
+version = "${mod.loader}-${mod.version}+mc$mcVersion"
 group = mod.group
 base { archivesName.set(mod.id) }
 
@@ -155,7 +156,7 @@ fun appendGithubActionPublish() {
     //val dependencies = property("publish.dependencies").toString()
     //val mc_targets = property("mod.mc_targets").toString()
     val mc_title = property("mod.mc_title").toString()
-    val modloader = property("mod.loader").toString().uppercaseFirstChar()
+    val modloader = mod.loader.uppercaseFirstChar()
 
     val version = "$mcVersion-$modloader"
 
