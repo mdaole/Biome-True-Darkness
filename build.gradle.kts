@@ -168,7 +168,7 @@ fun appendGithubActionPublish() {
     releaseText.append("          curseforge-token: \${{ secrets.CURSEFORGE_TOKEN }}\n")
     // releaseText.append("          loaders: ${modloader.lowercase()}\n")
     releaseText.append("          name: v\${{github.ref_name}} for $modloader $mc_title\n")
-    releaseText.append("          files: 'versions/${version.lowercase()}/build/libs/!(*-@(dev|sources|javadoc|all)).jar'\n")
+    releaseText.append("          files: 'versions/$mcVersion/build/libs/!(*-@(dev|sources|javadoc|all)).jar'\n")
     // releaseText.append("          game-versions: $mc_targets\n");
     // releaseText.append("          dependencies: $dependencies\n");
 
