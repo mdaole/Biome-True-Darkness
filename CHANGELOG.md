@@ -1,3 +1,4 @@
-- Changed description in Mod Menu.
+- Fixed *Dark Nether Fog* & *Dark End Fog* options not working.
 - Changed *Dark Nether Fog* & *Dark End Fog* option fields into sliders.
+- Changed description in Mod Menu.
 - Switched to use Stonecutter toolchain for development.

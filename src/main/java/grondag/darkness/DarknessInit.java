@@ -14,7 +14,6 @@ import org.apache.logging.log4j.Logger;
 public class DarknessInit implements ModInitializer {
     public static final String MOD_ID = "darkness";
     public static final String MOD_NAME = "TrueDarknessRefabricated";
-    public static Logger LOG = LogManager.getLogger(MOD_NAME);
     public static final DarknessConfig CONFIG = DarknessConfig.createAndLoad();
 
     @Override
