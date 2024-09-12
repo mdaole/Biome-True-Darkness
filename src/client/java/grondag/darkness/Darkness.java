@@ -44,9 +44,9 @@ public class Darkness {
     static double darkNetherFogEffective;
     static double darkEndFogEffective;
 
-    // boolean test = CONFIG.darkEnd();
-
     /*
+    public static Logger LOG = LogManager.getLogger(DarknessInit.MOD_NAME);
+
      * static { try { DarknessConfig.getInstance().darkNetherFog =
      * Mth.clamp(DarknessConfig.getInstance().darkNetherFog, 0.0, 1.0); } catch
      * (final Exception e) { DarknessConfig.getInstance().darkNetherFog = 0.5; LOG.
@@ -63,15 +63,13 @@ public class Darkness {
         darkEndFogEffective = CONFIG.darkEnd() ? CONFIG.darkEndFog() : 1.0;
     }
 
-    public static boolean blockLightOnly() {
-        return CONFIG.blockLightOnly();
-    }
-
     public static double darkNetherFog() {
+        computeConfigValues();
         return darkNetherFogEffective;
     }
 
     public static double darkEndFog() {
+        computeConfigValues();
         return darkEndFogEffective;
     }
 
