@@ -34,7 +34,7 @@ jobs:
           modrinth-id: Pf8PJBb5
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           name: v${{github.ref_name}} for Fabric 1.20.1
-          files: 'versions/1.20.1-fabric/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
+          files: 'versions/1.20.1/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
 
       - name: Publish-1.20.2-Fabric-Curseforge
         uses: Kir-Antipov/mc-publish@v3.3.0
@@ -50,7 +50,7 @@ jobs:
           modrinth-id: Pf8PJBb5
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           name: v${{github.ref_name}} for Fabric 1.20.2
-          files: 'versions/1.20.2-fabric/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
+          files: 'versions/1.20.2/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
 
       - name: Publish-1.20.4-Fabric-Curseforge
         uses: Kir-Antipov/mc-publish@v3.3.0
@@ -66,7 +66,7 @@ jobs:
           modrinth-id: Pf8PJBb5
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           name: v${{github.ref_name}} for Fabric 1.20.4
-          files: 'versions/1.20.4-fabric/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
+          files: 'versions/1.20.4/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
 
       - name: Publish-1.20.6-Fabric-Curseforge
         uses: Kir-Antipov/mc-publish@v3.3.0
@@ -82,7 +82,7 @@ jobs:
           modrinth-id: Pf8PJBb5
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           name: v${{github.ref_name}} for Fabric 1.20.6
-          files: 'versions/1.20.6-fabric/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
+          files: 'versions/1.20.6/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
 
       - name: Publish-1.21.1-Fabric-Curseforge
         uses: Kir-Antipov/mc-publish@v3.3.0
@@ -98,4 +98,4 @@ jobs:
           modrinth-id: Pf8PJBb5
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           name: v${{github.ref_name}} for Fabric 1.21.1
-          files: 'versions/1.21.1-fabric/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
+          files: 'versions/1.21.1/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
