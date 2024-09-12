@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package grondag.darkness.mixin;
+package grondag.darkness.mixin.client;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -28,42 +28,46 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.mojang.blaze3d.platform.NativeImage;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.texture.DynamicTexture;
 
 import grondag.darkness.Darkness;
 import grondag.darkness.LightmapAccess;
 
-@Mixin(LightTexture.class)
+//? if >=1.21 {
+import net.minecraft.client.DeltaTracker;
+//?} else if <=1.20.4 {
+/*import com.mojang.blaze3d.vertex.PoseStack;
+*///?}
+
+@Mixin(GameRenderer.class)
 @Environment(EnvType.CLIENT)
-public class MixinLightTexture implements LightmapAccess {
+public class MixinGameRenderer {
     @Shadow
-    private NativeImage lightPixels;
+    private Minecraft minecraft;
     @Shadow
-    private float blockLightRedFlicker;
-    @Shadow
-    private boolean updateLightTexture;
+    private LightTexture lightTexture;
 
-    @Inject(method = "updateLightTexture", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/texture/DynamicTexture;upload()V"))
-    private void onUpload(CallbackInfo ci) {
-        if (Darkness.enabled && lightPixels != null) {
-            for (int b = 0; b < 16; b++) {
-                for (int s = 0; s < 16; s++) {
-                    final int color = Darkness.darken(lightPixels.getPixelRGBA(b, s), b, s);
-                    lightPixels.setPixelRGBA(b, s, color);
-                }
-            }
+    @Inject(method = "renderLevel", at = @At(value = "HEAD"))
+    //? if >=1.21 {
+    private void onRenderLevel(DeltaTracker deltaTracker, CallbackInfo ci) {
+    //?} else if >=1.20.5 {
+    /*private void onRenderLevel(float tickDelta, long nanos, CallbackInfo ci) {
+    *///?} else {
+    /*private void onRenderLevel(float tickDelta, long nanos, PoseStack matrixStack, CallbackInfo ci) {
+    *///?}
+        final LightmapAccess lightmap = (LightmapAccess) lightTexture;
+
+        if (lightmap.darkness_isDirty()) {
+            minecraft.getProfiler().push("lightTex");
+            //? if >=1.21 {
+            Darkness.updateLuminance(deltaTracker.getGameTimeDeltaTicks(), minecraft, (GameRenderer) (Object) this,
+                lightmap.darkness_prevFlicker());
+            //?} else {
+            /*Darkness.updateLuminance(tickDelta, minecraft, (GameRenderer) (Object) this, lightmap.darkness_prevFlicker());
+            *///?}
+            minecraft.getProfiler().pop();
         }
-    }
-
-    @Override
-    public float darkness_prevFlicker() {
-        return blockLightRedFlicker;
-    }
-
-    @Override
-    public boolean darkness_isDirty() {
-        return updateLightTexture;
     }
 }

@@ -21,8 +21,6 @@
 package grondag.darkness;
 
 import grondag.darkness.compat.ApoliCompat;
-import grondag.darkness.config.DarknessConfig;
-import grondag.darkness.config.DarknessConfigModel;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
@@ -42,9 +40,6 @@ import static grondag.darkness.DarknessInit.CONFIG;
 
 @Environment(EnvType.CLIENT)
 public class Darkness {
-    public static final String MODID = "darkness";
-    public static final String MODNAME = "TrueDarknessRefabricated";
-    public static Logger LOG = LogManager.getLogger(MODNAME);
 
     static double darkNetherFogEffective;
     static double darkEndFogEffective;
@@ -145,11 +140,9 @@ public class Darkness {
             if (!isDark(world) || client.player.hasEffect(MobEffects.NIGHT_VISION)
                     || (client.player.hasEffect(MobEffects.CONDUIT_POWER) && client.player.getWaterVision() > 0)
                     || world.getSkyFlashTime() > 0
-                    // spotless:off
-                    //#if MC != 12006
+                    //? if !(=1.20.5 || =1.20.6) {
                     || apoliCompat.isApoliNightVisionPower(client)
-                    //#endif
-                    //spotless:on
+                    //?}
             ) {
                 enabled = false;
                 return;

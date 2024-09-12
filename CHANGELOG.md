@@ -1,2 +1,3 @@
-- Fixed crashing issue when Origins is not installed.
-
+- Changed description in Mod Menu.
+- Changed *Dark Nether Fog* & *Dark End Fog* option fields into sliders.
+- Switched to use Stonecutter toolchain for development.
