@@ -22,7 +22,7 @@ package grondag.darkness;
 
 import java.nio.file.Path;
 
-import net.minecraftforge.fml.loading.FMLPaths;
+import net.neoforged.fml.loading.FMLPaths;
 
 public class Platform {
 	public static Path configDirectory() {

@@ -27,9 +27,6 @@ import java.util.Properties;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.components.ChatComponent;
-import net.minecraft.network.chat.Component;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -44,6 +41,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.DimensionType;
 
 public class Darkness {
+
+	public static final String MODID = "truedarkness";
 	public static Logger LOG = LogManager.getLogger("Darkness");
 
 	static boolean darkOverworld;
@@ -285,7 +284,8 @@ public class Darkness {
 			}
 
 			float originalDimSkyFactor = Darkness.skyFactor(world);
-			final float dimSkyFactor = originalDimSkyFactor + (1 - (biomeFadeInAlpha / 100)) * (1 - originalDimSkyFactor);
+			//final float dimSkyFactor = originalDimSkyFactor + (1 - (100 / 100)) * (1 - originalDimSkyFactor);
+			final float dimSkyFactor = originalDimSkyFactor;
 			final float ambient = world.getSkyDarken(1.0F);
 			final DimensionType dim = world.dimensionType();
 			final boolean blockAmbient = !Darkness.isDark(world);
@@ -320,7 +320,7 @@ public class Darkness {
 						blockFactor = 1 - blockFactor * blockFactor * blockFactor * blockFactor;
 					}
 
-					blockFactor = blockFactor + (1 - (biomeFadeInAlpha / 100)) * (1 - blockFactor);
+					//blockFactor = blockFactor + (1 - (biomeFadeInAlpha / 100)) * (1 - blockFactor);
 					final float blockBase = blockFactor * LightTexture.getBrightness(dim, blockIndex) * (prevFlicker * 0.1F + 1.5F);
 					min = 0.4f * blockFactor;
 					final float blockGreen = blockBase * ((blockBase * (1 - min) + min) * (1 - min) + min);

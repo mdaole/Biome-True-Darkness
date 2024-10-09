@@ -1,0 +1,12 @@
+/time set night
+/time add 200
+/time add 2000
+/time add 20000
+/time add 200
+/time add 1000
+/time add 500
+/time add 1d
+/time add 0.5d
+/time add 1d
+/locate biome minecraft:lush_caves
+/tp @s -387 43 -284

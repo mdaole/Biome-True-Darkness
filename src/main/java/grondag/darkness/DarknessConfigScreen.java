@@ -41,7 +41,7 @@ public class DarknessConfigScreen extends Screen {
 	protected Checkbox darkSkylessWidget;
 
 	public DarknessConfigScreen(Screen parent) {
-		super(Component.translatable("config.darkness.title"));
+		super(Component.literal("config.darkness.title"));
 		this.parent = parent;
 	}
 
@@ -58,91 +58,91 @@ public class DarknessConfigScreen extends Screen {
 	@Override
 	protected void init() {
 		int i = 27;
-		blockLightOnlyWidget = new Checkbox(width / 2 - 100, i, 200, 20, Component.translatable("config.darkness.label.block_light_only"), Darkness.blockLightOnly) {
+		blockLightOnlyWidget = new Checkbox(width / 2 - 100, i, 200, 20, Component.literal("config.darkness.label.block_light_only"), Darkness.blockLightOnly) {
 			@Override
 			public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
 				super.renderWidget(guiGraphics, mouseX, mouseY, delta);
 
 				if (isHoveredOrFocused()) {
-					guiGraphics.renderTooltip(DarknessConfigScreen.this.minecraft.font, Component.translatable("config.darkness.help.block_light_only"), mouseX, mouseY);
+					guiGraphics.renderTooltip(DarknessConfigScreen.this.minecraft.font, Component.literal("config.darkness.help.block_light_only"), mouseX, mouseY);
 				}
 			}
 		};
 
 		i += 27;
 
-		ignoreMoonPhaseWidget = new Checkbox(width / 2 - 100, i, 200, 20, Component.translatable("config.darkness.label.ignore_moon_phase"), Darkness.ignoreMoonPhase) {
+		ignoreMoonPhaseWidget = new Checkbox(width / 2 - 100, i, 200, 20, Component.literal("config.darkness.label.ignore_moon_phase"), Darkness.ignoreMoonPhase) {
 			@Override
 			public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
 				super.renderWidget(guiGraphics, mouseX, mouseY, delta);
 
 				if (isHovered) {
-					guiGraphics.renderTooltip(DarknessConfigScreen.this.minecraft.font, Component.translatable("config.darkness.help.ignore_moon_phase"), mouseX, mouseY);
+					guiGraphics.renderTooltip(DarknessConfigScreen.this.minecraft.font, Component.literal("config.darkness.help.ignore_moon_phase"), mouseX, mouseY);
 				}
 			}
 		};
 
 		i += 27;
 
-		darkOverworldWidget = new Checkbox(width / 2 - 100, i, 200, 20, Component.translatable("config.darkness.label.dark_overworld"), Darkness.darkOverworld) {
+		darkOverworldWidget = new Checkbox(width / 2 - 100, i, 200, 20, Component.literal("config.darkness.label.dark_overworld"), Darkness.darkOverworld) {
 			@Override
 			public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
 				super.renderWidget(guiGraphics, mouseX, mouseY, delta);
 
 				if (isHovered) {
-					guiGraphics.renderTooltip(DarknessConfigScreen.this.minecraft.font, Component.translatable("config.darkness.help.dark_overworld"), mouseX, mouseY);
+					guiGraphics.renderTooltip(DarknessConfigScreen.this.minecraft.font, Component.literal("config.darkness.help.dark_overworld"), mouseX, mouseY);
 				}
 			}
 		};
 
 		i += 27;
 
-		darkNetherWidget = new Checkbox(width / 2 - 100, i, 200, 20, Component.translatable("config.darkness.label.dark_nether"), Darkness.darkNether) {
+		darkNetherWidget = new Checkbox(width / 2 - 100, i, 200, 20, Component.literal("config.darkness.label.dark_nether"), Darkness.darkNether) {
 			@Override
 			public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
 				super.renderWidget(guiGraphics, mouseX, mouseY, delta);
 
 				if (isHovered) {
-					guiGraphics.renderTooltip(DarknessConfigScreen.this.minecraft.font, Component.translatable("config.darkness.help.dark_nether"), mouseX, mouseY);
+					guiGraphics.renderTooltip(DarknessConfigScreen.this.minecraft.font, Component.literal("config.darkness.help.dark_nether"), mouseX, mouseY);
 				}
 			}
 		};
 
 		i += 27;
 
-		darkEndWidget = new Checkbox(width / 2 - 100, i, 200, 20, Component.translatable("config.darkness.label.dark_end"), Darkness.darkEnd) {
+		darkEndWidget = new Checkbox(width / 2 - 100, i, 200, 20, Component.literal("config.darkness.label.dark_end"), Darkness.darkEnd) {
 			@Override
 			public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
 				super.renderWidget(guiGraphics, mouseX, mouseY, delta);
 
 				if (isHovered) {
-					guiGraphics.renderTooltip(DarknessConfigScreen.this.minecraft.font, Component.translatable("config.darkness.help.dark_end"), mouseX, mouseY);
+					guiGraphics.renderTooltip(DarknessConfigScreen.this.minecraft.font, Component.literal("config.darkness.help.dark_end"), mouseX, mouseY);
 				}
 			}
 		};
 
 		i += 27;
 
-		darkDefaultWidget = new Checkbox(width / 2 - 100, i, 200, 20, Component.translatable("config.darkness.label.dark_default"), Darkness.darkDefault) {
+		darkDefaultWidget = new Checkbox(width / 2 - 100, i, 200, 20, Component.literal("config.darkness.label.dark_default"), Darkness.darkDefault) {
 			@Override
 			public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
 				super.renderWidget(guiGraphics, mouseX, mouseY, delta);
 
 				if (isHovered) {
-					guiGraphics.renderTooltip(DarknessConfigScreen.this.minecraft.font, Component.translatable("config.darkness.help.dark_default"), mouseX, mouseY);
+					guiGraphics.renderTooltip(DarknessConfigScreen.this.minecraft.font, Component.literal("config.darkness.help.dark_default"), mouseX, mouseY);
 				}
 			}
 		};
 
 		i += 27;
 
-		darkSkylessWidget = new Checkbox(width / 2 - 100, i, 200, 20, Component.translatable("config.darkness.label.dark_skyless"), Darkness.darkSkyless) {
+		darkSkylessWidget = new Checkbox(width / 2 - 100, i, 200, 20, Component.literal("config.darkness.label.dark_skyless"), Darkness.darkSkyless) {
 			@Override
 			public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
 				super.renderWidget(guiGraphics, mouseX, mouseY, delta);
 
 				if (isHovered) {
-					guiGraphics.renderTooltip(DarknessConfigScreen.this.minecraft.font, Component.translatable("config.darkness.help.dark_skyless"), mouseX, mouseY);
+					guiGraphics.renderTooltip(DarknessConfigScreen.this.minecraft.font, Component.literal("config.darkness.help.dark_skyless"), mouseX, mouseY);
 				}
 			}
 		};
@@ -172,7 +172,7 @@ public class DarknessConfigScreen extends Screen {
 
 	@Override
 	public void render(GuiGraphics guiGraphics, int i, int j, float f) {
-		renderBackground(guiGraphics);
+		renderBackground(guiGraphics, i, j, f);
 		guiGraphics.drawCenteredString(this.minecraft.font, this.title, this.width / 2, 5, 16777215);
 
 		super.render(guiGraphics, i, j, f);

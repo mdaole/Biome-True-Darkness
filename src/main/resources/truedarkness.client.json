@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "grondag.darkness.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "MixinGameRenderer",
+	"MixinLightTexture",
+	"MixinDynamicTexture",
+    "MixinEndEffects",
+	"MixinNetherEffects"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
