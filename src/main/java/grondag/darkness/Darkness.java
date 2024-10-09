@@ -42,7 +42,7 @@ import net.minecraft.world.level.dimension.DimensionType;
 
 public class Darkness {
 
-	public static final String MODID = "truedarkness";
+	public static final String MODID = "darkness";
 	public static Logger LOG = LogManager.getLogger("Darkness");
 
 	static boolean darkOverworld;
@@ -320,7 +320,7 @@ public class Darkness {
 						blockFactor = 1 - blockFactor * blockFactor * blockFactor * blockFactor;
 					}
 
-					//blockFactor = blockFactor + (1 - (biomeFadeInAlpha / 100)) * (1 - blockFactor);
+					blockFactor = blockFactor + (1 - (biomeFadeInAlpha / 100)) * (1 - blockFactor);
 					final float blockBase = blockFactor * LightTexture.getBrightness(dim, blockIndex) * (prevFlicker * 0.1F + 1.5F);
 					min = 0.4f * blockFactor;
 					final float blockGreen = blockBase * ((blockBase * (1 - min) + min) * (1 - min) + min);

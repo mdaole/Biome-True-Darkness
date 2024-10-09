@@ -4,6 +4,7 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id 'net.neoforged.gradle.userdev' version '7.0.116'
+    id 'net.neoforged.gradle.mixin' version '7.0.116'
 }
 
 version = mod_version
@@ -11,6 +12,24 @@ group = mod_group_id
 
 repositories {
     mavenLocal()
+
+    maven {
+        // location of the maven that hosts JEI files
+        name = "Progwml6 maven"
+        url = 'https://dvs1.progwml6.com/files/maven/'
+    }
+    maven {
+        name = "curios"
+        url = 'https://maven.theillusivec4.top/'
+    }
+    maven { url = 'https://maven.blamejared.com' }
+    maven { url = 'https://www.cursemaven.com'  }
+
+
+    maven {
+        name = 'tterrag maven'
+        url = 'https://maven.tterrag.com/'
+    }
 }
 
 base {
@@ -82,6 +101,7 @@ dependencies {
     // For all intends and purposes: You can treat this dependency as if it is a normal library you would use.
     implementation "net.neoforged:neoforge:${neo_version}"
 
+
     // Example mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"
@@ -102,6 +122,12 @@ dependencies {
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
+}
+
+mixin {
+    // MixinGradle Settings
+    //add sourceSets.main, 'createreturnticket.refmap.json'
+    config 'darkness.client.json'
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
