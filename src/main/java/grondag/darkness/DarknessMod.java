@@ -23,14 +23,21 @@ package grondag.darkness;
 
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.client.ConfigScreenHandler;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
 @Mod(value = Darkness.MODID)
 public class DarknessMod {
 
+
+
+
     public DarknessMod(ModContainer container) {
-        container.registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () ->
-                new ConfigScreenHandler.ConfigScreenFactory((minecraft, screen) -> new DarknessConfigScreen(screen)));
+
+        container.registerConfig(ModConfig.Type.CLIENT, DarknessConfig.modConfigSpec);
+
+        container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
     }
 
 }
