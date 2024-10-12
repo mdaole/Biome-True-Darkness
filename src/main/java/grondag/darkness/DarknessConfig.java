@@ -6,6 +6,7 @@ import org.apache.commons.lang3.tuple.Pair;
 public class DarknessConfig
 {
 
+    public static Pair<DarknessConfig, ModConfigSpec> storedConfig;
     public final static ModConfigSpec modConfigSpec;
     public final ModConfigSpec.BooleanValue only_affect_block_light;
     public final ModConfigSpec.BooleanValue ignore_moon_phase;
@@ -58,9 +59,9 @@ public class DarknessConfig
 
     // Somewhere the constructor is accessible
     static {
-        Pair<DarknessConfig, ModConfigSpec> pair = new ModConfigSpec.Builder()
+        storedConfig = new ModConfigSpec.Builder()
                 .configure(DarknessConfig::new);
-        modConfigSpec = pair.getRight();
+        modConfigSpec = storedConfig.getRight();
 
     }
 }

@@ -20,13 +20,13 @@
 
 package grondag.darkness;
 
-import net.neoforged.fml.loading.FMLConfig;
+import net.neoforged.fml.loading.FMLPaths;
 
 import java.nio.file.Path;
 
 
 public class Platform {
 	public static Path configDirectory() {
-		return Path.of(FMLConfig.defaultConfigPath());
+		return FMLPaths.CONFIGDIR.get();
 	}
 }

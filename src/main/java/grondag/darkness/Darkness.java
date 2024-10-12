@@ -27,6 +27,7 @@ import java.util.Properties;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import net.neoforged.fml.loading.FMLConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -65,16 +66,6 @@ public class Darkness {
 	static float biomeFadeInAlpha = 0;
 
 	static {
-		final File configFile = getConfigFile();
-		final Properties properties = new Properties();
-
-		if (configFile.exists()) {
-			try (FileInputStream stream = new FileInputStream(configFile)) {
-				properties.load(stream);
-			} catch (final IOException e) {
-				LOG.warn("[Darkness] Could not read property file '" + configFile.getAbsolutePath() + "'", e);
-			}
-		}
 
 		//Try to load Biome Config File
 		Gson gson = new Gson();
@@ -84,7 +75,7 @@ public class Darkness {
 			darknessBiomes = gson.fromJson(reader, JsonObject.class);
 		}
 		catch (final IOException e) {
-			LOG.warn("[Darkness] Could not read property file '" + configFile.getAbsolutePath() + "'", e);
+			LOG.warn("[Darkness] Could not read property file '" + biomesFile.getAbsolutePath() + "'", e);
 			darknessBiomes = new JsonObject();
 		}
 
@@ -99,30 +90,18 @@ public class Darkness {
 			darknessBiomes.add("Biomes", new JsonArray());
 		}
 
-		ignoreMoonPhase = properties.computeIfAbsent("ignore_moon_phase", (a) -> "false").equals("true");
-		blockLightOnly = properties.computeIfAbsent("only_affect_block_light", (a) -> "false").equals("true");
-		darkOverworld = properties.computeIfAbsent("dark_overworld", (a) -> "true").equals("true");
-		darkDefault = properties.computeIfAbsent("dark_default", (a) -> "true").equals("true");
-		darkNether = properties.computeIfAbsent("dark_nether", (a) -> "true").equals("true");
-		darkEnd = properties.computeIfAbsent("dark_end", (a) -> "true").equals("true");
-		darkSkyless = properties.computeIfAbsent("dark_skyless", (a) -> "true").equals("true");
-		invertBiomeDarkness = properties.computeIfAbsent("invert_biome_darkness", (a) -> "false").equals(("true"));
-
-		try {
-			darkNetherFogConfigured = Double.parseDouble(properties.computeIfAbsent("dark_nether_fog", (a) -> "0.5").toString());
-			darkNetherFogConfigured = Mth.clamp(darkNetherFogConfigured, 0.0, 1.0);
-		} catch (final Exception e) {
-			darkNetherFogConfigured = 0.5;
-			LOG.warn("[Darkness] Invalid configuration value for 'dark_nether_fog'. Using default value.");
-		}
-
-		try {
-			darkEndFogConfigured = Double.parseDouble(properties.computeIfAbsent("dark_end_fog", (a) -> "0.0").toString());
-			darkEndFogConfigured = Mth.clamp(darkEndFogConfigured, 0.0, 1.0);
-		} catch (final Exception e) {
-			darkEndFogConfigured = 0.0;
-			LOG.warn("[Darkness] Invalid configuration value for 'dark_end_fog'. Using default value.");
-		}
+		//Load Normal Config Values from Neoforge Config
+		DarknessConfig darknessConfig = DarknessConfig.storedConfig.getLeft();
+		ignoreMoonPhase = darknessConfig.ignore_moon_phase.getAsBoolean();
+		blockLightOnly = darknessConfig.only_affect_block_light.getAsBoolean();
+		darkOverworld = darknessConfig.dark_overworld.getAsBoolean();
+		darkDefault = darknessConfig.dark_default.getAsBoolean();
+		darkNether = darknessConfig.dark_nether.getAsBoolean();
+		darkEnd = darknessConfig.dark_end.getAsBoolean();
+		darkSkyless = darknessConfig.dark_skyless.getAsBoolean();
+		invertBiomeDarkness = darknessConfig.invert_biome_darkness.getAsBoolean();
+		darkNetherFogConfigured = darknessConfig.dark_nether_fog.getAsDouble();
+		darkEndFogConfigured = darknessConfig.dark_end_fog.getAsDouble();
 
 		computeConfigValues();
 
@@ -134,15 +113,6 @@ public class Darkness {
 		darkEndFogEffective = darkEnd ? darkEndFogConfigured : 1.0;
 	}
 
-	private static File getConfigFile() {
-		final File configDir = Platform.configDirectory().toFile();
-
-		if (!configDir.exists()) {
-			LOG.warn("[Darkness] Could not access configuration directory: " + configDir.getAbsolutePath());
-		}
-
-		return new File(configDir, "darkness.properties");
-	}
 
 	private static File getBiomesFile()
 	{
@@ -156,26 +126,6 @@ public class Darkness {
 	}
 
 	public static void saveConfig() {
-		final File configFile = getConfigFile();
-		final Properties properties = new Properties();
-
-		properties.put("only_affect_block_light", Boolean.toString(blockLightOnly));
-		properties.put("ignore_moon_phase", Boolean.toString(ignoreMoonPhase));
-		properties.put("dark_overworld", Boolean.toString(darkOverworld));
-		properties.put("dark_default", Boolean.toString(darkDefault));
-		properties.put("dark_nether", Boolean.toString(darkNether));
-		properties.put("dark_nether_fog", Double.toString(darkNetherFogConfigured));
-		properties.put("dark_end", Boolean.toString(darkEnd));
-		properties.put("dark_end_fog", Double.toString(darkEndFogConfigured));
-		properties.put("dark_skyless", Boolean.toString(darkSkyless));
-		properties.put("invert_biome_darkness", Boolean.toString(invertBiomeDarkness));
-
-		try (FileOutputStream stream = new FileOutputStream(configFile)) {
-			properties.store(stream, "Darkness properties file");
-		} catch (final IOException e) {
-			LOG.warn("[Darkness] Could not store property file '" + configFile.getAbsolutePath() + "'", e);
-		}
-
 		//Save Biomes List
 		Gson gson = new Gson();
 		final File biomesFile = getBiomesFile();
@@ -184,9 +134,8 @@ public class Darkness {
 		}
 		catch (final IOException e)
 		{
-			LOG.warn("[Darkness] Could not store property file '" + configFile.getAbsolutePath() + "'", e);
+			LOG.warn("[Darkness] Could not store property file '" + biomesFile.getAbsolutePath() + "'", e);
 		}
-
 	}
 
 	public static boolean blockLightOnly() {
