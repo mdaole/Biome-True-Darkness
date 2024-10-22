@@ -94,7 +94,7 @@ public class Darkness {
 		//Load Normal Config Values from Neoforge Config
 		DarknessConfig darknessConfig = DarknessConfig.storedConfig.getLeft();
 		ignoreMoonPhase = darknessConfig.ignore_moon_phase.getAsBoolean();
-        gradualMoonPhaseDarkness = darknessConfig.gradual_moon_phase_darkness.getAsBoolean();
+		gradualMoonPhaseDarkness = darknessConfig.gradual_moon_phase_darkness.getAsBoolean();
 		blockLightOnly = darknessConfig.only_affect_block_light.getAsBoolean();
 		darkOverworld = darknessConfig.dark_overworld.getAsBoolean();
 		darkDefault = darknessConfig.dark_default.getAsBoolean();
